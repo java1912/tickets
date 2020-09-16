@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<!-- 菜单 -->
+	<div class="panel-group" id="accordion" th:fragment="menu" role="tablist" aria-multiselectable="true" >
+  		<div class="panel panel-default">
+    		<div class="panel-heading" role="tab" id="headingEmpMgrMenu">
+      			<h4 class="panel-title">
+        			<a role="button" data-toggle="collapse" data-parent="#accordion" href="#empMgrMenu" aria-expanded="true" aria-controls="empMgrMenu">
+          				员工管理
+        			</a>
+      			</h4>
+    		</div>
+    		<div id="empMgrMenu" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+     		 	<ul class="list-group">
+  					<li class="list-group-item"><a href="#">查询员工</a></li>
+  					<li class="list-group-item"><a href="#" th:href="@{/emp/regEmpPage}">添加员工</a></li>
+				</ul>
+    		</div>
+  		</div>
+  		<div class="panel panel-default">
+    		<div class="panel-heading" role="tab" id="cusOperMenu">
+      			<h4 class="panel-title">
+        			<a role="button" data-toggle="collapse" data-parent="#accordion" href="#cusMgrMenu" aria-expanded="true" aria-controls="cusMgrMenu">
+          				旅客功能
+        			</a>
+      			</h4>
+    		</div>
+    		<div id="cusMgrMenu" class="panel-collapse collapse" role="tabpanel" aria-labelledby="cusOperMenu">
+     		 	<ul class="list-group">
+  					<li class="list-group-item"><a href="#">查询线路</a></li>
+  					<li class="list-group-item"><a href="#">订票</a></li>
+				</ul>
+    		</div>
+  		</div>
+	</div>
+
+</body>
+</html>

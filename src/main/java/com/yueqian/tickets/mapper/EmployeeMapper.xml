@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yueqian.tickets.mapper.EmployeeMapper">
+	<resultMap type="EmployeeVO" id="empMapper">
+		<id property="empId" column="emp_id" />
+		<result property="account" column="account" />
+		<result property="pwd" column="pwd" />
+		<result property="realName" column="real_name" />
+		<result property="sex" column="sex" />
+		<result property="nationality" column="nationality" />
+		<result property="idCardNum" column="id_card_num" />
+		<result property="dob" column="dob" />
+		<result property="hireDate" column="hire_date" />
+		<result property="address" column="address" />
+		<result property="telephone" column="telephone" />
+		<result property="duty" column="duty" />
+	</resultMap>
+
+	<select id="getEmps" resultMap="empMapper">
+		select 
+			emp_id, account, pwd, real_name  ,  sex, 
+			nationality,  id_card_num,  dob, hire_date  ,address, 
+			telephone  ,  duty  
+		from employee
+	</select>
+	
+	<insert id="regEmp" parameterType="EmployeeVO">
+		insert into employee 
+			(emp_id, account, pwd, real_name  ,  sex, 
+			 nationality,  id_card_num,  dob, hire_date  ,address,
+		 	telephone  ,  duty)
+		values(SQ_EMPNO.nextval, #{account}, #{pwd}, #{realName}, #{sex}
+				, #{nationality}, #{idCardNum}, #{dob}, sysdate, #{address}
+				, #{telephone}, #{duty})
+	</insert>
+</mapper>

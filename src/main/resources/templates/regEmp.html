@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Insert title here</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link th:href="@{/bootstrap/css/bootstrap.css}" href="#" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="#"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}" src="#"></script>
+</head>
+<body>
+<!-- 导航条 -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        长途汽车管理系统
+      </a>
+    </div>
+  </div>
+</nav>
+<!-- 主体 -->
+<div class="container">
+	<div class="row">
+		<!-- 菜单 -->
+		<div class="col-md-4" th:insert="~{component/menu :: menu}">
+			
+		</div>
+		<!-- 表单 -->
+		<div class="col-md-6 col-md-offset-1">
+			<form action="#" th:action="@{/emp/reg}" method="post">
+  				<div class="form-group">
+    				<label for="account">账户名称:</label>
+    				<input type="text" class="form-control" id="account" name="account" placeholder="账户名称">
+  				</div>
+  				<div class="form-group">
+    				<label for="telephone">员工手机:</label>
+    				<input type="text" class="form-control" id="telephone" name="telephone" placeholder="员工手机">
+  				</div>
+  				<div class="form-group">
+    				<label for="realName">员工姓名:</label>
+    				<input type="text" class="form-control" id="realName" name="realName" placeholder="员工姓名">
+  				</div>
+  				<div class="form-group">
+    				<label >员工性别:</label>
+    				<input type="radio" id="sex1" name="sex" value="1"> 男&nbsp;&nbsp;
+    				<input type="radio" id="sex2" name="sex" value="0"> 女
+  				</div>
+  				
+  				<div class="form-group">
+    				<label for="idCardNum">身份证号:</label>
+    				<input type="text" class="form-control" id="idCardNum" name="idCardNum" placeholder="身份证号">
+  				</div>
+  				<div class="form-group">
+    				<label for="pwd">注册密码:</label>
+    				<input type="password" class="form-control" id="pwd" name="pwd" placeholder="注册密码">
+  				</div>
+  				<div class="form-group">
+    				<label for="repwd">验证密码:</label>
+    				<input type="password" class="form-control" id="repwd" name="repwd" placeholder="验证密码">
+  				</div>
+  				<div class="form-group">
+    				<label for="nationality">员工民族:</label>
+    				<input type="text" class="form-control" id="nationality" name="nationality" placeholder="员工民族">
+  				</div>
+  				<div class="form-group">
+    				<label for="dob">员工生日:</label>
+    				<input type="date" class="form-control" id="dob" name="dob" placeholder="员工生日">
+  				</div>
+  				<div class="form-group">
+    				<label for="duty">员工职务:</label>
+    				<select class="form-control" id="duty" name="duty" >
+    					<option value="站长">站长</option>
+    					<option value="售票员">售票员</option>
+    					<option value="托运">托运员</option>
+    					<option value="司机">司机</option>
+    					<option value="站务">站务</option>
+    				</select>
+  				</div>
+  				<div class="form-group">
+    				<label for="address">员工住址:</label>
+    				<textarea rows="3" cols="10" class="form-control" id="address" name="address" placeholder="员工住址">
+    				</textarea>
+  				</div>
+    			<button type="submit" class="btn btn-primary form-control" >注册</button>
+    			</form>
+  			</div>
+
+		</div>
+</div>
+
+</body>
+</html>
