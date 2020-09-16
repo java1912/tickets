@@ -1,0 +1,68 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>车辆添加页面</title>
+
+    <link th:href="@{/bootstrap/css/bootstrap.css}" href="#" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="#"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}" src="#"></script>
+</head>
+<body>
+<form  action="" enctype="multipart/form-data" method="post">
+    <div class="wrap">
+        <!-- main begin-->
+        <div class="sale">
+            <h1 class="lf">汽车客运管理系统</h1>
+
+        </div>
+        <div class="login logns produce">
+            <h1 class="blues">车辆信息</h1>
+            <dl>
+                <dd >
+                    <label>车牌号码：</label>
+                    <input type="text" name="vehicle_num" class="inputh lf" value="" />
+                    <div id="numid" class="lf red laba">车牌号码唯一</div>
+                </dd>
+                <dd>
+                    <label>车辆品牌：</label>
+                    <input type="text"  name="brand" class="inputh lf" value="" />
+                    <div id="brandid" class="lf red laba"></div>
+                </dd>
+                <dd>
+                    <label>排气量：</label>
+                    <input type="text" name="displacement" class="inputh lf"  value="" />
+                    <div id="displacementid" class="lf red laba"></div>
+                </dd>
+                <dd>
+                    <label>最大载客数：</label>
+                    <input type="text" name="max_carry" class="inputh lf"  value="" />
+                    <div id="max_carryid" class="lf red laba"></div>
+                </dd>
+                <dd>
+                    <label>发动机号：</label>
+                    <input type="text" name="engine_number" class="inputh lf"  value="" />
+                    <div id="engine_numberid" class="lf red laba"></div>
+                </dd>
+
+                <dd>
+                    <label>购买日期：</label>
+                    <input type="text" name="buy_date" class="inputh lf" readonly onclick="selectDate(this,'yyyy-MM-dd')"/>
+                    <div id="buy_dateid" class="lf red laba">格式：2010-05-05</div>
+                </dd>
+
+                <dd class="hegas">
+                    <input type="submit" value="保 存" onclick="location='/'" class="spbg buttombg buttombgs buttomb f14 lf" />
+                    <input type="reset" value="取 消" onclick="location='/'" class="spbg buttombg buttombgs buttomb f14 lf" />
+                </dd>
+            </dl>
+        </div>
+        <!-- main end-->
+        <!-- footer begin-->
+    </div>
+    <!--footer end-->
+</form>
+
+
+</body>
+</html>
