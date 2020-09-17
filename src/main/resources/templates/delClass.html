@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Insert title here</title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap -->
+    <link th:href="@{/bootstrap/css/bootstrap.css}" href="#" rel="stylesheet">
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="#"></script>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}" src="#"></script>
+</head>
+<body>
+<!-- 导航条 -->
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#">
+        长途汽车管理系统
+      </a>
+    </div>
+  </div>
+</nav>
+<!-- 主体 -->
+<div class="container">
+	<div class="row">
+		<!-- 菜单 -->
+		<div class="col-md-4" th:insert="~{component/menu :: menu}">
+			
+		</div>
+		<!-- 表格 -->
+		<div class="col-md-8">
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<th>序号</th><th>班次编号</th><th>线路编号</th><th>车辆编号</th><th>司机编号</th><th>出发日期时间</th><th>返程日期时间</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td th:text="1"></td>
+						<td th:text="2"></td>
+						<td th:text="3"></td>
+						<td th:text="4"></td>
+						<td th:text="5"></td>
+						<td >2020-09-1515:23:34</td>
+						<td >2020-09-1515:23:34</td>
+						<td>
+							<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;
+							<a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+						</td>
+					</tr>
+					<tr>
+						<td th:text="2"></td>
+						<td th:text="3"></td>
+						<td th:text="4"></td>
+						<td th:text="5"></td>
+						<td th:text="6"></td>
+						<td>2020-09-15 09:20:32</td>
+						<td>2020-09-15 15:23:34</td>
+						<td>
+							<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;
+							<a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+						</td>
+					</tr>
+					<tr>
+						<td th:text="3"></td>
+						<td th:text="4"></td>
+						<td th:text="5"></td>
+						<td th:text="6"></td>
+						<td th:text="7"></td>
+						<td>2020-09-15 09:20:32</td>
+						<td>2020-09-15 09:20:32</td>
+						<td>
+							<a href="#"><span class="glyphicon glyphicon-pencil"></span></a>&nbsp;&nbsp;
+							<a href="#"><span class="glyphicon glyphicon-trash"></span></a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+
+</body>
+</html>
