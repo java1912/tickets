@@ -22,6 +22,23 @@
 				</ul>
     		</div>
   		</div>
+  		<!-- 线路管理 -->
+  		<div class="panel panel-default">
+    		<div class="panel-heading" role="tab" id="lineOperMenu">
+      			<h4 class="panel-title">
+        			<a role="button" data-toggle="collapse" data-parent="#accordion" href="#linOperMenu" aria-expanded="true" aria-controls="linOperMenu">
+          				线路管理
+        			</a>
+      			</h4>
+    		</div>
+    		<div id="linOperMenu" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="lineOperMenu">
+     		 	<ul class="list-group">
+  					<li class="list-group-item"><a href="#" th:href="@{/line/addLinesPage}">添加线路</a></li>
+  					<li class="list-group-item"><a href="#" th:href="@{/line/modLinesPage}">修改线路</a></li>
+  					<li class="list-group-item"><a href="#" th:href="@{/line/delLinesPage}">删除线路</a></li>
+				</ul>
+    		</div>
+  		</div>
   		<div class="panel panel-default">
     		<div class="panel-heading" role="tab" id="cusOperMenu">
       			<h4 class="panel-title">

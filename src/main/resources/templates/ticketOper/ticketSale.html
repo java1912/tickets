@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>票价出售</title>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link th:href="@{/bootstrap/css/bootstrap.css}" href="#"
+	rel="stylesheet">
+<script type="text/javascript" th:src="@{/js/jquery.min.js}" src="#"></script>
+<script type="text/javascript"
+	th:src="@{/bootstrap/js/bootstrap.min.js}" src="#"></script>
+	<style type="text/css">
+	.navbar-brand,.dropdown,.date{
+	    float:left;
+	}
+	.dropdown{
+	 margin:5px;
+	 
+	}
+	.date{
+	   margin:10px;
+	
+	}
+	</style>
+</head>
+<body>
+	<nav class="navbar navbar-default">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<div class="navbar-brand" > 长途汽车管理系统 </div>
+				<div class="dropdown">
+					<button type="button" class="btn dropdown-toggle"
+						id="dropdownMenu1" data-toggle="dropdown">
+						目的地 <span class="caret"></span>
+					</button>
+					<ul class="dropdown-menu" role="menu"
+						aria-labelledby="dropdownMenu1">
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+							href="#">西安</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+							href="#">铜川</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+							href="#">宝鸡</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+							href="#">咸阳</a></li>
+						<li role="presentation"><a role="menuitem" tabindex="-1"
+							href="#">兰州</a></li>
+					</ul>
+				</div>
+				<div class="date">
+					<label>订票时间</label> <input type="date" />
+				</div>
+			</div>
+		</div>
+	</nav>
+
+
+	<div class="container">
+		<div class="row">
+			<!-- 菜单 -->
+			<div class="col-md-4" th:insert="~{component/menu :: menu}"></div>
+			<!--表格-->
+			<div class="col-md-6 col-md-offset-1">
+				<table class="table table-bordered">
+					<caption>边框表格布局</caption>
+					<thead>
+						<tr>
+							<th th:text="时间" />
+							<th th:text="地点" />
+							<th th:text="座次" />
+							<th th:text="订票" />
+							<th th:text="退票" />
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td th:text="1" />
+							<td th:text="1" />
+							<td th:text="1" />
+							<td><a><span class="glyphicon glyphicon-pencil"></span></a></td>
+						</tr>
+						<tr>
+							<td th:text="1" />
+							<td th:text="1" />
+							<td th:text="1" />
+							<td><a><span class="glyphicon glyphicon-pencil"></span></a></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
