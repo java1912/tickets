@@ -9,5 +9,5 @@ public class ClassesController extends ParamCheckController{
 	@RequestMapping("delClasses")
 	public String delClass() {
 		return "delClass";
-	}
+	} 
 }

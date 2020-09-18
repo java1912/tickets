@@ -9,7 +9,7 @@ public interface EmployeeService {
 	/**
 	 * 查询员工
 	 */
-	public List<EmployeeVO> getEmps();
+	public List<EmployeeVO> getEmps(String condition, String orderCol, String orderSeq);
 	/**
 	 * 登录验证
 	 */
@@ -20,4 +20,9 @@ public interface EmployeeService {
 	/**
 	 * 删除员工
 	 */
+	
+	/**
+	 * 验证账户名
+	 */
+	public String isExistsAccName(String accName);
 }

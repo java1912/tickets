@@ -18,12 +18,13 @@
 		<result property="duty" column="duty" />
 	</resultMap>
 
-	<select id="getEmps" resultMap="empMapper">
+	<select id="getEmps" resultMap="empMapper" parameterType="map">
 		select 
 			emp_id, account, pwd, real_name  ,  sex, 
 			nationality,  id_card_num,  dob, hire_date  ,address, 
 			telephone  ,  duty  
 		from employee
+		<include refid="conditionSql"></include>
 	</select>
 	
 	<insert id="regEmp" parameterType="EmployeeVO">
@@ -35,4 +36,31 @@
 				, #{nationality}, #{idCardNum}, #{dob}, sysdate, #{address}
 				, #{telephone}, #{duty})
 	</insert>
+	
+	<!-- 验证账户名是否存在 -->
+	<select id="isExistsAccName" parameterType="string" resultType="string">
+		select 'yes' from employee where account = #{accName}
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="getRowCount" resultType="_int" parameterType="map">
+		select count(1) from employee
+		<include refid="conditionSql"></include>
+	</select>
+	
+	<!-- 定义代码片段 -->
+	<sql id="conditionSql">
+		<if test="condition != null">
+			where account = #{condition} or 
+				  real_name like '%${condition}%' or 
+				  sex = #{condition} or 
+				  nationality = #{condition} or 
+				  id_card_num = #{condition} or 
+				  to_char(dob,'yyyy-mm-dd') = #{condition} or 
+				  to_char( hire_date,'yyyy-mm-dd') = #{condition} or 
+				  address = #{condition} or 
+				  telephone = #{condition} or 
+				  duty = #{condition}
+		</if>
+	</sql>
 </mapper>

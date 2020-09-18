@@ -1,10 +1,13 @@
 package com.yueqian.tickets.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yueqian.tickets.common.Constant;
 import com.yueqian.tickets.domain.EmployeeVO;
@@ -19,7 +22,7 @@ public class EmpController extends ParamCheckController {
 	@RequestMapping("regEmpPage")
 	public String getRegEmpPage() {
 		
-		return "regEmp";
+		return "empOper/regEmp";
 	}
 	
 	@RequestMapping("reg")
@@ -29,7 +32,7 @@ public class EmpController extends ParamCheckController {
 		String errMsg = checkPassword(emp.getPwd(), repwd);
 		if( errMsg != null) {
 			mm.addAttribute(Constant.ERROR_MSG_KEY, errMsg);
-			return "regEmp";
+			return "empOper/regEmp";
 		}
 		//校验其他参数
 		
@@ -63,5 +66,26 @@ public class EmpController extends ParamCheckController {
 		}
 		return null;
 	}
+	
+	/**
+	 * 账户名唯一性验证
+	 */
+	@RequestMapping("isExistsAccName")
+	@ResponseBody
+	public String isExistsAccName(String accName) {
+		return empService.isExistsAccName(accName);
+	}
+	
+	/**
+	 * 显示员工列表
+	 */
+	@ResponseBody
+	@RequestMapping("getEmps")
+	public List<EmployeeVO> getEmps(String condition, String orderCol, String orderSeq){
+		List<EmployeeVO> list = empService.getEmps(condition, orderCol, orderSeq);
+		
+		return list;
+	}
+	
 
 }

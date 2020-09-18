@@ -15,7 +15,7 @@ public class IndexController {
 	
 	@RequestMapping({"/","","index"})
 	public String viewEmps(ModelMap mm) {
-		mm.addAttribute("emps", empService.getEmps());
+		//mm.addAttribute("emps", empService.getEmps(null, "real_name", "asc"));
 		return "index";
 	}
 }

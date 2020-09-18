@@ -10,18 +10,64 @@
     <link th:href="@{/bootstrap/css/bootstrap.css}" href="#" rel="stylesheet">
     <script type="text/javascript" th:src="@{/js/jquery.min.js}" src="#"></script>
     <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}" src="#"></script>
+    <script type="text/javascript" th:src="@{/js/check.js}" src="#"></script>
+    <script type="text/javascript">
+    	function searchEmp(){
+    		console.log("search emps ...");
+    		viewEmp();
+    	}
+    	
+    	$(function(){
+    		viewEmp();
+    	});
+    	
+    	function viewEmp(){
+    		var queryCondition = null;
+    		if($("#searchInput").val()){
+    			queryCondition = {
+    					condition: $("#searchInput").val(),
+    					orderCol: "real_name",
+    					orderSeq: "asc"
+    			};
+    		}else{
+    			queryCondition = {
+    					orderCol: "real_name",
+    					orderSeq: "asc"
+    			};
+    		}
+    		
+    		
+    		$.getJSON("[[@{/emp/getEmps}]]",
+    				queryCondition,
+    				function(data){
+    					console.log(data);
+    					var tbody = $("#empTbody");
+    					tbody.empty();
+    					$.each(data, function(i, emp){
+    						var row = $("<tr><td>"+(i+1)+"</td>"+
+    								"<td>"+emp.empId+"</td>"+
+    								"<td>"+emp.realName+"</td>"+
+    								"<td>"+emp.telephone+"</td>"+
+    								"<td>"+emp.duty+"</td>"+
+    								"<td>"+(emp.sex == 0?'女':'男')+"</td>"+
+    								"<td>"+emp.nationality+"</td>"+
+    								"<td>"+emp.dob.substring(0,10)+"</td>"+
+    								"<td>"+emp.hireDate.substring(0,10)+"</td>"+
+    								"<td>"+emp.address+"</td>"+
+    								"<td>"+
+    									"<a href='#'><span class='glyphicon glyphicon-pencil'></span></a>&nbsp;&nbsp;"+
+    									"<a href='#'><span class='glyphicon glyphicon-trash'></span></a>"+
+    								"</td>"+
+    								"</tr>");
+    						tbody.append(row);
+    					});
+    				});
+    	}
+    </script>
 </head>
 <body>
 <!-- 导航条 -->
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">
-        长途汽车管理系统
-      </a>
-    </div>
-  </div>
-</nav>
+<div th:replace="~{component/titleBar::titleBar('searchEmp')}"></div>
 <!-- 主体 -->
 <div class="container">
 	<div class="row">
@@ -31,6 +77,7 @@
 		</div>
 		<!-- 表格 -->
 		<div class="col-md-8">
+			<div class="col-md-12">
 			<table class="table table-striped">
 				<thead>
 					<tr>
@@ -38,7 +85,7 @@
 						<th>民族</th><th>生日</th><th>入职日期</th><th>地址</th><th>操作</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody id="empTbody">
 					<tr th:each="emp,status:${emps}">
 						<td th:text="${status.count}"></td>
 						<td th:text="${emp.empId}"></td>
@@ -57,6 +104,30 @@
 					</tr>
 				</tbody>
 			</table>
+			</div>
+			<div class="col-md-6 col-md-offset-6">
+				<nav aria-label="Page navigation">
+  <ul class="pagination">
+    <li>
+      <a href="#" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+     <li><a href="#">...</a></li>
+    <li><a href="#">1</a></li>
+    <li><a href="#">2</a></li>
+    <li><a href="#">3</a></li>
+    <li><a href="#">4</a></li>
+    <li><a href="#">5</a></li>
+    <li><a href="#">...</a></li>
+    <li>
+      <a href="#" aria-label="Next">
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+  </ul>
+</nav>
+			</div>
 		</div>
 	</div>
 </div>

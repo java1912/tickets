@@ -1,22 +1,14 @@
 package com.yueqian.tickets.controller;
 
+import org.springframework.util.StringUtils;
+
 public class ParamCheckController {
 	
 	/**
 	 * 字符串校验
 	 */
 	public boolean isEmptyStr(String ... strArray) {
-		if(strArray == null || strArray.length == 0) {
-			return true;
-		}
-		
-		for (int i = 0; i < strArray.length; i++) {
-			if(strArray[i] == null || strArray[i].length() == 0) {
-				return true;
-			}
-		}
-		
-		return false;
+		return StringUtils.isEmpty(strArray);
 	}
 	
 	/**
