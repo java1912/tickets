@@ -11,13 +11,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.yueqian.tickets.common.Constant;
 import com.yueqian.tickets.domain.EmployeeVO;
+import com.yueqian.tickets.domain.PageVO;
 import com.yueqian.tickets.service.EmployeeService;
+import com.yueqian.tickets.service.SplitPageService;
 
 @Controller
 @RequestMapping("emp")
 public class EmpController extends ParamCheckController {
 	@Resource
 	private EmployeeService empService;
+	@Resource(name = "empSplitPageService")
+	private SplitPageService<EmployeeVO> empSplitPageService;
 	
 	@RequestMapping("regEmpPage")
 	public String getRegEmpPage() {
@@ -81,10 +85,14 @@ public class EmpController extends ParamCheckController {
 	 */
 	@ResponseBody
 	@RequestMapping("getEmps")
-	public List<EmployeeVO> getEmps(String condition, String orderCol, String orderSeq){
-		List<EmployeeVO> list = empService.getEmps(condition, orderCol, orderSeq);
+	public PageVO<EmployeeVO> getEmps(String condition, String orderCol, String orderSeq, PageVO<EmployeeVO> pageVO, ModelMap mm) {
+		mm.addAttribute("pageVO",pageVO);
+		empSplitPageService.setRowCount(condition, orderCol, orderSeq, pageVO);
+		empSplitPageService.setPageContentList(pageVO, condition, orderCol, orderSeq);
 		
-		return list;
+///		List<EmployeeVO> list = empService.getEmps(condition, orderCol, orderSeq);
+		
+		return pageVO;
 	}
 	
 

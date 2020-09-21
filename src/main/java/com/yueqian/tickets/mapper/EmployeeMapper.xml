@@ -18,15 +18,29 @@
 		<result property="duty" column="duty" />
 	</resultMap>
 
+	<!-- 查询内容 -->
 	<select id="getEmps" resultMap="empMapper" parameterType="map">
 		select 
-			emp_id, account, pwd, real_name  ,  sex, 
-			nationality,  id_card_num,  dob, hire_date  ,address, 
-			telephone  ,  duty  
-		from employee
+ 		 emp_id, account, pwd, real_name  ,  sex, 
+     		 nationality,  id_card_num,  dob, hire_date  ,address, 
+      		telephone  ,  duty 
+		from (
+			select 
+      			e.* , row_number() over(<include refid="orderSql"></include>) rn
+    			from employee e) t
+		where rn between #{startRow} and #{endRow}
+		<include refid="conditionSql"></include>
+		
+	</select>
+	
+	<!-- 查询总条数 -->
+	<select id="getRowCount" resultType="_int" parameterType="map">
+		select count(1) from employee
+		where 1 = 1
 		<include refid="conditionSql"></include>
 	</select>
 	
+	<!-- 注册员工 -->
 	<insert id="regEmp" parameterType="EmployeeVO">
 		insert into employee 
 			(emp_id, account, pwd, real_name  ,  sex, 
@@ -42,16 +56,11 @@
 		select 'yes' from employee where account = #{accName}
 	</select>
 	
-	<!-- 查询总条数 -->
-	<select id="getRowCount" resultType="_int" parameterType="map">
-		select count(1) from employee
-		<include refid="conditionSql"></include>
-	</select>
-	
 	<!-- 定义代码片段 -->
+	<!-- 模糊查询条件 -->
 	<sql id="conditionSql">
 		<if test="condition != null">
-			where account = #{condition} or 
+			and (account = #{condition} or 
 				  real_name like '%${condition}%' or 
 				  sex = #{condition} or 
 				  nationality = #{condition} or 
@@ -60,7 +69,17 @@
 				  to_char( hire_date,'yyyy-mm-dd') = #{condition} or 
 				  address = #{condition} or 
 				  telephone = #{condition} or 
-				  duty = #{condition}
+				  duty = #{condition})
 		</if>
 	</sql>
+	<!-- 排序片段 -->
+	<sql id="orderSql">
+		<if test="orderCol != null">
+			order by ${orderCol} 
+			<if test="orderSeq != null">
+				${orderSeq}
+			</if>
+		</if>
+	</sql>
+	
 </mapper>

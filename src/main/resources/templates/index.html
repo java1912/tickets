@@ -12,38 +12,71 @@
     <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}" src="#"></script>
     <script type="text/javascript" th:src="@{/js/check.js}" src="#"></script>
     <script type="text/javascript">
+    	//定义全局分页对象
+    	var pVO = null;
+    	
     	function searchEmp(){
-    		console.log("search emps ...");
-    		viewEmp();
+    		viewEmp(1, $("#pageSizeEle").val());
     	}
     	
+    	function setPageSize(){
+    		viewEmp(1, $("#pageSizeEle").val());
+    	}
+    	
+    	//跳转到指定页面
+    	function setPageIndex(index){
+    		viewEmp(index, $("#pageSizeEle").val());
+    	}
+    	//向前跳
+    	function setPrePage(){
+    		var nowPageNum = pVO.nowPageNum;
+    		if(nowPageNum == 1){
+    			return;
+    		}
+    		setPageIndex(nowPageNum - 1);
+    	}
+    	//向后跳
+    	function setNextPage(){
+    		var nowPageNum = pVO.nowPageNum;
+    		if(nowPageNum == pVO.pageCount){
+    			return;
+    		}
+    		setPageIndex(nowPageNum + 1);
+    	}
+    	
+    	/* 初始化时设定每页5条，当前是第1页*/
     	$(function(){
-    		viewEmp();
+    		viewEmp(1, 5);
     	});
     	
-    	function viewEmp(){
+    	function viewEmp(now_Page_Num, page_Size){
     		var queryCondition = null;
     		if($("#searchInput").val()){
     			queryCondition = {
     					condition: $("#searchInput").val(),
     					orderCol: "real_name",
-    					orderSeq: "asc"
+    					orderSeq: "asc",
+    					nowPageNum : now_Page_Num,
+    					pageSize : page_Size
     			};
     		}else{
     			queryCondition = {
     					orderCol: "real_name",
-    					orderSeq: "asc"
+    					orderSeq: "asc",
+    					nowPageNum : now_Page_Num,
+    					pageSize : page_Size
     			};
     		}
     		
     		
     		$.getJSON("[[@{/emp/getEmps}]]",
     				queryCondition,
-    				function(data){
-    					console.log(data);
+    				function(pageVO){
+    					pVO = pageVO;
+    					console.log(pageVO);
     					var tbody = $("#empTbody");
     					tbody.empty();
-    					$.each(data, function(i, emp){
+    					$.each(pageVO.contentList, function(i, emp){
     						var row = $("<tr><td>"+(i+1)+"</td>"+
     								"<td>"+emp.empId+"</td>"+
     								"<td>"+emp.realName+"</td>"+
@@ -61,6 +94,28 @@
     								"</tr>");
     						tbody.append(row);
     					});
+    					//设定分页信息
+    					var splitUl = $("#empPageNum");
+    					//清空其原有内容
+    					splitUl.empty();
+    					//添加分析页码 
+    					
+    					//添加前一个页面跳转
+    					splitUl.append("<li><a href='javascript:setPrePage()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>");
+    					for(var i = 1; i <= pageVO.pageCount; i++){
+	    					splitUl.append("<li><a href='javascript:setPageIndex("+i+")' >"+i+"</a></li>");
+    					}
+    					//添加后一个页面跳转
+    					splitUl.append("<li><a href='javascript:setNextPage()' aria-label='Next'><span aria-hidden='true'>&raquo;</span></a></li>");
+    					//设定当前页码的激活态
+    					$("#empPageNum li").each(function(i){
+    						$(this).prop("class", "");
+    						if(i == pageVO.nowPageNum){
+    							$(this).prop("class", "active");
+    						}
+    					});
+    					//设定显示每页条目
+    					$("#pageSizeEle").val(pageVO.pageSize);
     				});
     	}
     </script>
@@ -105,9 +160,23 @@
 				</tbody>
 			</table>
 			</div>
-			<div class="col-md-6 col-md-offset-6">
+			
+<!-- 分页组件 -->
+			<div class="col-md-8 col-md-offset-4">
+			<div class="col-md-4">
+		<select id="pageSizeEle" name="pageSizeEle" class="form-control"
+		 style="position:relative;top:20px"
+		 onchange="setPageSize()">
+			<option value="1">每页1条</option>
+			<option value="3">每页3条</option>
+			<option value="5">每页5条</option>
+			<option value="10">每页10条</option>
+			<option value="20">每页20条</option>
+		</select>
+	</div>
+			<div class="col-md-8">
 				<nav aria-label="Page navigation">
-  <ul class="pagination">
+  <ul class="pagination" id="empPageNum">
     <li>
       <a href="#" aria-label="Previous">
         <span aria-hidden="true">&laquo;</span>
@@ -127,10 +196,14 @@
     </li>
   </ul>
 </nav>
+</div>
+	
 			</div>
 		</div>
 	</div>
 </div>
+<!-- 添加消息框 -->
+<div class="col-md-4" th:insert="~{component/dialog :: mesDailog}">
 
 </body>
 </html>
