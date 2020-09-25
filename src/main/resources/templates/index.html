@@ -12,6 +12,8 @@
     <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}" src="#"></script>
     <script type="text/javascript" th:src="@{/js/check.js}" src="#"></script>
     <script type="text/javascript">
+    	//定义全局权限
+    	var auths = null;
     	//定义全局分页对象
     	var pVO = null;
     	
@@ -71,12 +73,13 @@
     		
     		$.getJSON("[[@{/emp/getEmps}]]",
     				queryCondition,
-    				function(pageVO){
-    					pVO = pageVO;
-    					console.log(pageVO);
+    				function(map){
+    					pVO = map.pageVO;
+    					auths = map.auths;
+    					console.log(map);
     					var tbody = $("#empTbody");
     					tbody.empty();
-    					$.each(pageVO.contentList, function(i, emp){
+    					$.each(pVO.contentList, function(i, emp){
     						var row = $("<tr><td>"+(i+1)+"</td>"+
     								"<td>"+emp.empId+"</td>"+
     								"<td>"+emp.realName+"</td>"+
@@ -102,7 +105,7 @@
     					
     					//添加前一个页面跳转
     					splitUl.append("<li><a href='javascript:setPrePage()' aria-label='Previous'><span aria-hidden='true'>&laquo;</span></a></li>");
-    					for(var i = 1; i <= pageVO.pageCount; i++){
+    					for(var i = 1; i <= pVO.pageCount; i++){
 	    					splitUl.append("<li><a href='javascript:setPageIndex("+i+")' >"+i+"</a></li>");
     					}
     					//添加后一个页面跳转
@@ -110,12 +113,12 @@
     					//设定当前页码的激活态
     					$("#empPageNum li").each(function(i){
     						$(this).prop("class", "");
-    						if(i == pageVO.nowPageNum){
+    						if(i == pVO.nowPageNum){
     							$(this).prop("class", "active");
     						}
     					});
     					//设定显示每页条目
-    					$("#pageSizeEle").val(pageVO.pageSize);
+    					$("#pageSizeEle").val(pVO.pageSize);
     				});
     	}
     </script>
@@ -127,7 +130,7 @@
 <div class="container">
 	<div class="row">
 		<!-- 菜单 -->
-		<div class="col-md-4" th:insert="~{component/menu :: menu}">
+		<div class="col-md-4" th:insert="~{component/menu :: menu(${authoritys})}">
 			
 		</div>
 		<!-- 表格 -->

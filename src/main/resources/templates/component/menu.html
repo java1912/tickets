@@ -6,8 +6,8 @@
 </head>
 <body>
 	<!-- 菜单 -->
-	<div class="panel-group" id="accordion" th:fragment="menu" role="tablist" aria-multiselectable="true" >
-  		<div class="panel panel-default">
+	<div class="panel-group" id="accordion" th:fragment="menu(auths)" role="tablist" aria-multiselectable="true" >
+  		<div class="panel panel-default" th:if="${#lists.contains(auths,'ROLE_MGR')}">
     		<div class="panel-heading" role="tab" id="headingEmpMgrMenu">
       			<h4 class="panel-title">
         			<a role="button" data-toggle="collapse" data-parent="#accordion" href="#empMgrMenu" aria-expanded="true" aria-controls="empMgrMenu">
@@ -23,7 +23,7 @@
     		</div>
   		</div>
   		<!-- 线路管理 -->
-  		<div class="panel panel-default">
+  		<div class="panel panel-default" th:if="${#lists.contains(auths,'ROLE_MGR')}">
     		<div class="panel-heading" role="tab" id="lineOperMenu">
       			<h4 class="panel-title">
         			<a role="button" data-toggle="collapse" data-parent="#accordion" href="#linOperMenu" aria-expanded="true" aria-controls="linOperMenu">
@@ -31,7 +31,7 @@
         			</a>
       			</h4>
     		</div>
-    		<div id="linOperMenu" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="lineOperMenu">
+    		<div id="linOperMenu" class="panel-collapse collapse" role="tabpanel" aria-labelledby="lineOperMenu">
      		 	<ul class="list-group">
   					<li class="list-group-item"><a href="#" th:href="@{/line/addLinesPage}">添加线路</a></li>
   					<li class="list-group-item"><a href="#" th:href="@{/line/modLinesPage}">修改线路</a></li>
@@ -39,7 +39,7 @@
 				</ul>
     		</div>
   		</div>
-  		<div class="panel panel-default">
+  		<div class="panel panel-default"  th:if="${#lists.contains(auths,'ROLE_CUS')}">
     		<div class="panel-heading" role="tab" id="cusOperMenu">
       			<h4 class="panel-title">
         			<a role="button" data-toggle="collapse" data-parent="#accordion" href="#cusMgrMenu" aria-expanded="true" aria-controls="cusMgrMenu">
@@ -54,7 +54,7 @@
 				</ul>
     		</div>
   		</div>
-  		<div class="panel panel-default">
+  		<div class="panel panel-default"  th:if="${#lists.contains(auths,'ROLE_MGR') or #lists.contains(auths,'ROLE_CUS')}">
     		<div class="panel-heading" role="tab" id="classOperMenu">
       			<h4 class="panel-title">
         			<a role="button" data-toggle="collapse" data-parent="#accordion" href="#classMenu" aria-expanded="true" aria-controls="classMenu">

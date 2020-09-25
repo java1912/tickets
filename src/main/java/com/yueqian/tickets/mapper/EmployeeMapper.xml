@@ -82,4 +82,13 @@
 		</if>
 	</sql>
 	
+	<select id="getEmployeeByAccName" resultMap="empMapper" parameterType="string">
+		select 
+ 		 emp_id, account, pwd, real_name  ,  sex, 
+     		 nationality,  id_card_num,  dob, hire_date  ,address, 
+      		telephone  ,  duty 
+      	from employee
+      	where account=#{accName}
+	</select>
+	
 </mapper>

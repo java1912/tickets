@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC 
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yueqian.tickets.mapper.RoleMapper">
+	<resultMap type="RoleVO" id="roleMapper">
+		<id property="roleId" column="role_id" />
+		<result property="roleName" column="role_name" />
+		<result property="roleDesc" column="role_desc" />
+	</resultMap>
+
+	<!-- 查询内容 -->
+	<select id="getRoleByAccName" resultMap="roleMapper" parameterType="string">
+		select r.role_id,role_name,role_desc 
+		from role r, emp_role er, employee e
+		where r.role_id = er.role_id and er.emp_id = e.emp_id
+		and e.account=#{accName}
+	</select>
+	
+</mapper>

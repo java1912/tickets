@@ -1,9 +1,16 @@
 package com.yueqian.tickets.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,7 +32,7 @@ public class EmpController extends ParamCheckController {
 	
 	@RequestMapping("regEmpPage")
 	public String getRegEmpPage() {
-		
+		 
 		return "empOper/regEmp";
 	}
 	
@@ -85,14 +92,30 @@ public class EmpController extends ParamCheckController {
 	 */
 	@ResponseBody
 	@RequestMapping("getEmps")
-	public PageVO<EmployeeVO> getEmps(String condition, String orderCol, String orderSeq, PageVO<EmployeeVO> pageVO, ModelMap mm) {
-		mm.addAttribute("pageVO",pageVO);
+	public Map<String, Object> getEmps(String condition, String orderCol, String orderSeq, PageVO<EmployeeVO> pageVO) {
+		Map<String, Object> result = new HashMap<String, Object>();
+		result.put("pageVO",pageVO);
+		
 		empSplitPageService.setRowCount(condition, orderCol, orderSeq, pageVO);
 		empSplitPageService.setPageContentList(pageVO, condition, orderCol, orderSeq);
 		
 ///		List<EmployeeVO> list = empService.getEmps(condition, orderCol, orderSeq);
 		
-		return pageVO;
+		//获取用户的权限
+		//获取上下文
+		SecurityContext context = SecurityContextHolder.getContext();
+		//获取登录用户的信息
+		Authentication  auth = context.getAuthentication();
+		//获取登录用户权限
+		List<GrantedAuthority> grantList = (List<GrantedAuthority>)auth.getAuthorities();
+		List<String> grantStrs = new ArrayList<String>();
+		for (GrantedAuthority ga : grantList) {
+			grantStrs.add(ga.getAuthority());
+		}
+		// authority 权限名称
+		result.put("auths", grantStrs);
+		
+		return result;
 	}
 	
 

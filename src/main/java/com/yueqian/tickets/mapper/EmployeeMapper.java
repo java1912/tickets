@@ -32,4 +32,8 @@ public interface EmployeeMapper {
 	public int getRowCount(Map<String,Object> param);
 
 
+	/**
+	 * 根据账户名获取员工
+	 */
+	public EmployeeVO getEmployeeByAccName(String accName);
 }
